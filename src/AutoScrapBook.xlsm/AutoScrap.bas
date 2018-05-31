@@ -1,4 +1,5 @@
 Attribute VB_Name = "AutoScrap"
+Option Explicit
 Private Declare Function OpenClipboard Lib "user32" (Optional ByVal hWnd As Long = 0) As Long
 Private Declare Function CloseClipboard Lib "user32" () As Long
 Private Declare Function EmptyClipboard Lib "user32" () As Long
@@ -45,6 +46,7 @@ Public Sub OnTimeScrap(Optional ByRef void = Empty)
     Dim TargetRowTop As Single
     If Not Running Then GoTo Quit
     If CB(1) <> -1 Then
+        Dim i As Long
         For i = 1 To UBound(CB)
             If CB(i) = xlClipboardFormatBitmap Then
                 With targetSheet
@@ -55,6 +57,7 @@ Public Sub OnTimeScrap(Optional ByRef void = Empty)
                     Else
                         TargetRowTop = 0
                     End If
+                    Dim cnt As Long
                     cnt = 1
                     Do While TargetRowTop > .Cells(cnt, 1).Top
                         cnt = cnt + 1

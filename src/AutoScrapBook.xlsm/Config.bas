@@ -1,4 +1,5 @@
 Attribute VB_Name = "Config"
+Option Explicit
 Public BackGroundColor As Long
 Public Margin As Long
 Public InsertTime As Boolean
