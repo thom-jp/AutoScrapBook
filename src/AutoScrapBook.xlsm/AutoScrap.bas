@@ -4,6 +4,27 @@ Private Declare Function OpenClipboard Lib "user32" (Optional ByVal hWnd As Long
 Private Declare Function CloseClipboard Lib "user32" () As Long
 Private Declare Function EmptyClipboard Lib "user32" () As Long
 Private Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
+Private Declare Function GetForegroundWindow Lib "user32" () As Long
+
+Private Declare Function SetWindowPos Lib "user32" ( _
+    ByVal hWnd As Long, _
+    ByVal hWndInsertAfter As Long, _
+    ByVal X As Long, _
+    ByVal Y As Long, _
+    ByVal cx As Long, _
+    ByVal cy As Long, _
+    ByVal uFlags As Long _
+    ) As Long
+Private Const HWND_TOPMOST = -1
+Private Const HWND_NOTOPMOST = -2
+Private Const SWP_NOSIZE = &H1
+Private Const SWP_NOMOVE = &H2
+
+Private Declare Function GetWindow Lib "user32" (ByVal hWnd As Long, ByVal wCmd As Long) As Long
+Private Const GW_HWNDPREV = 3
+
+Private Declare Function GetWindowThreadProcessId Lib "user32" (ByVal hWnd As Long, ByRef lpdwProcessId As Long) As Long
+
 
 Private Running As Boolean
 Private targetSheet As Worksheet
@@ -66,6 +87,8 @@ Public Sub OnTimeScrap(Optional ByRef void = Empty)
                     ActiveWindow.ScrollRow = cnt - 1
                     If Config.InsertTime Then targetSheet.Range("A" & cnt - 1).Value = Time
                     .Paste Destination:=.Cells(cnt, 1)
+                    Dim fgw As Long: fgw = GetForegroundWindow
+                    Call PopUpWindow
                 End With
                 Call clearClipboard
             End If
@@ -78,3 +101,31 @@ Quit:
     MsgBox "AutoScrapを停止しました。", vbInformation
     Application.Caption = ""
 End Sub
+
+Private Sub PopUpWindow()
+    Dim fgw As Long: fgw = GetForegroundWindow
+    Dim baseWindow As Long: baseWindow = PrevWindow
+    Call SetWindowPos(Application.hWnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE Or SWP_NOSIZE)
+    Call SetWindowPos(Application.hWnd, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE Or SWP_NOSIZE)
+    DoEvents
+    Sleep 1000
+    Call SetWindowPos(Application.hWnd, baseWindow, 0, 0, 0, 0, SWP_NOMOVE Or SWP_NOSIZE)
+    Call SetWindowPos(fgw, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE Or SWP_NOSIZE)
+    Call SetWindowPos(fgw, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE Or SWP_NOSIZE)
+End Sub
+
+
+Private Property Get PrevWindow() As Long
+    Dim ret As Long: ret = Application.hWnd
+    
+    'Excelは複数のウィンドウで構成されるので、
+    '別プロセスになるまで手前へ手前へとretにハンドルを格納しつづける。
+    '例えばExcelのひとつ手前にメモ帳が表示されていても、
+    '単にGetWindow(Application.hwnd, GW_HWNDPREV)と書くだけではまだExcelの内部ウィンドウがヒットしてしまうので、
+    '別プロセスが現れるまでループさせる必要がある。
+    Do While GetWindowThreadProcessId(Application.hWnd, 0) = GetWindowThreadProcessId(ret, 0)
+        ret = GetWindow(ret, GW_HWNDPREV)
+    Loop
+
+    PrevWindow = ret
+End Property
