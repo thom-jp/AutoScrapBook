@@ -1,7 +1,9 @@
 Attribute VB_Name = "AutoScrap"
-Private Declare Function OpenClipboard Lib "user32" (Optional ByVal hwnd As Long = 0) As Long
+Private Declare Function OpenClipboard Lib "user32" (Optional ByVal hWnd As Long = 0) As Long
 Private Declare Function CloseClipboard Lib "user32" () As Long
 Private Declare Function EmptyClipboard Lib "user32" () As Long
+Private Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
+
 Private Running As Boolean
 Private targetSheet As Worksheet
 

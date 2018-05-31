@@ -54,4 +54,5 @@ Private Sub UserForm_Initialize()
         WorksheetList.AddItem ws.Name
     Next
     WorksheetList.Value = "(åªç›ÇÃÉVÅ[Ég)"
+    StartButton.SetFocus
 End Sub

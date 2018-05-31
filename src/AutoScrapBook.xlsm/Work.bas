@@ -6,4 +6,6 @@ Sub ClearSheet()
             sh.Delete
         Next
     End If
+    ActiveWindow.Zoom = 100
+    ActiveSheet.Range("A1").Select
 End Sub
