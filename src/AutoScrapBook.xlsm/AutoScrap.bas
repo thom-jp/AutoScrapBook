@@ -76,17 +76,22 @@ Public Sub OnTimeScrap(Optional ByRef void = Empty)
                             TargetRowTop = .Top + .Height
                         End With
                     Else
-                        TargetRowTop = 0
+                        TargetRowTop = targetSheet.Cells(Config.StartRow, 1).Top
                     End If
                     Dim cnt As Long
                     cnt = 1
-                    Do While TargetRowTop > .Cells(cnt, 1).Top
+                    Do While TargetRowTop > .Cells(cnt, Config.StartColumn).Top
                         cnt = cnt + 1
                     Loop
                     cnt = cnt + Config.Margin
                     ActiveWindow.ScrollRow = cnt - 1
-                    If Config.InsertTime Then targetSheet.Range("A" & cnt - 1).Value = Time
-                    .Paste Destination:=.Cells(cnt, 1)
+                    If Config.InsertTime Then
+                        With targetSheet.Cells(cnt - 1, Config.StartColumn)
+                            .NumberFormatLocal = "hh:mm:ss"
+                            .Value = Time
+                        End With
+                    End If
+                    .Paste Destination:=.Cells(cnt, Config.StartColumn)
                     Dim fgw As Long: fgw = GetForegroundWindow
                     Call PopUpWindow
                 End With
