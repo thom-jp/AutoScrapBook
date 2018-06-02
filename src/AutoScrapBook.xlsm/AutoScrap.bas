@@ -9,8 +9,8 @@ Private Declare Function GetForegroundWindow Lib "user32" () As Long
 Private Declare Function SetWindowPos Lib "user32" ( _
     ByVal hWnd As Long, _
     ByVal hWndInsertAfter As Long, _
-    ByVal X As Long, _
-    ByVal Y As Long, _
+    ByVal x As Long, _
+    ByVal y As Long, _
     ByVal cx As Long, _
     ByVal cy As Long, _
     ByVal uFlags As Long _
