@@ -11,3 +11,9 @@ Sub ClearSheet()
     ActiveWindow.Zoom = 100
     ActiveSheet.Range("A1").Select
 End Sub
+
+Sub testShapeLocator()
+    Dim sl As ShapeLocator: Set sl = New ShapeLocator
+    sl.SetShape Sheet1.Shapes(1)
+    Debug.Print sl.Top, sl.Bottom, sl.Left, sl.Right
+End Sub
