@@ -72,14 +72,11 @@ Public Sub OnTimeScrap(Optional ByRef void = Empty)
             If CB(i) = xlClipboardFormatBitmap Then
                 With targetSheet
                     If .Shapes.Count > 0 Then
-                        With .Shapes(.Shapes.Count)
-                            TargetRowTop = .Top + .Height
-                        End With
+                        TargetRowTop = LowestShapeEdge
                     Else
                         TargetRowTop = targetSheet.Cells(Config.StartRow, 1).Top
                     End If
-                    Dim cnt As Long
-                    cnt = 1
+                    Dim cnt As Long: cnt = 1
                     Do While TargetRowTop > .Cells(cnt, Config.StartColumn).Top
                         cnt = cnt + 1
                     Loop
@@ -92,7 +89,6 @@ Public Sub OnTimeScrap(Optional ByRef void = Empty)
                         End With
                     End If
                     .Paste Destination:=.Cells(cnt, Config.StartColumn)
-                    Dim fgw As Long: fgw = GetForegroundWindow
                     Call PopUpWindow
                 End With
                 Call clearClipboard
@@ -133,4 +129,13 @@ Private Property Get PrevWindow() As Long
     Loop
 
     PrevWindow = ret
+End Property
+
+Private Property Get LowestShapeEdge() As Single
+    Dim ret As Single: ret = 0
+    Dim s As Shape
+    For Each s In targetSheet.Shapes
+        If ret < (s.Top + s.Height) Then ret = s.Top + s.Height
+    Next
+    LowestShapeEdge = ret
 End Property

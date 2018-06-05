@@ -1,9 +1,6 @@
 Attribute VB_Name = "Indicators"
 Sub PutRedFrame()
 Attribute PutRedFrame.VB_ProcData.VB_Invoke_Func = " \n14"
-    Dim posX As Single
-    Dim posY As Single
-    
     Dim r As Range: Set r _
         = ActiveSheet.Cells(ActiveWindow.ScrollRow, ActiveWindow.ScrollColumn)
         
