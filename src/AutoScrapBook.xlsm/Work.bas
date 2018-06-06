@@ -15,5 +15,18 @@ End Sub
 Sub testShapeLocator()
     Dim sl As ShapeLocator: Set sl = New ShapeLocator
     sl.SetShape Sheet1.Shapes(1)
-    Debug.Print sl.Top, sl.Bottom, sl.Left, sl.Right
+    Dim lo As ILocator
+    Set lo = sl
+    Debug.Print lo.Top, lo.Bottom, lo.Left, lo.Right
+    lo.Locate Range("c14")
+End Sub
+
+Sub testRangeLocator()
+    Dim rl As RangeLocator: Set rl = New RangeLocator
+    rl.SetRange Range("c3:g7")
+    Dim lo As ILocator
+    Set lo = rl
+    Debug.Print lo.Top, lo.Bottom, lo.Left, lo.Right
+    lo.Locate Range("d16")
+    lo.Locate Range("c3")
 End Sub
