@@ -22,11 +22,19 @@ Sub testShapeLocator()
 End Sub
 
 Sub testRangeLocator()
+    With ActiveSheet
+        Dim sh As Worksheet: Set sh = Worksheets.Add
+        .Activate
+    End With
     Dim rl As RangeLocator: Set rl = New RangeLocator
-    rl.SetRange Range("c3:g7")
+    rl.SetRange Sheet1.Range("c3:g7")
     Dim lo As ILocator
     Set lo = rl
     Debug.Print lo.Top, lo.Bottom, lo.Left, lo.Right
-    lo.Locate Range("d16")
-    lo.Locate Range("c3")
+    lo.Locate sh.Range("d16")
+    lo.Locate Sheet1.Range("c3")
+    
+    With New NoAlert
+        sh.Delete
+    End With
 End Sub

@@ -12,7 +12,7 @@ Attribute PutRedFrame.VB_ProcData.VB_Invoke_Func = " \n14"
             .Transparency = 1
             .Solid
         End With
-        With .Line
+        With .line
             .Visible = msoTrue
             .ForeColor.RGB = RGB(192, 0, 0)
             .Transparency = 0

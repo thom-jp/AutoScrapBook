@@ -14,6 +14,10 @@ Public Sub SetRange(r As Range)
     Set innerRange = r
 End Sub
 
+Public Property Get Self() As Object
+    Set Self = Me
+End Property
+
 Private Property Get ILocator_Top() As Long
     ILocator_Top = innerRange(1).Row
 End Property
