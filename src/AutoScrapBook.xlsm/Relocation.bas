@@ -1,16 +1,35 @@
 Attribute VB_Name = "Relocation"
 Sub Main()
-    Dim x As ILocator
-    For Each x In GetRangeLocators(Sheet1)
-        'Debug.Print x.Top
-    Next
-    
+    Dim c As Collection
     Grouping.UngroupAllShapes Sheet1
     Grouping.GroupOverlappingShape Sheet1
-    For Each x2 In GetShapeLocators(Sheet1)
-        Debug.Print x2.Top
+    Set c = MargeCollection(GetRangeLocators(Sheet1), GetShapeLocators(Sheet1))
+    Dim x As ILocator
+    For Each x In c
+        Debug.Print x.Top
+    Next
+    Call CollectionSort.CSort(c, "LocateKey")
+    Debug.Print "-----"
+    For Each x In c
+        Debug.Print x.Top
     Next
 End Sub
+
+Function LocateKey(L As ILocator) As Double
+    LocateKey = L.Top
+End Function
+
+Function MargeCollection(c1 As Collection, c2 As Collection) As Collection
+    Dim ret As Collection: Set ret = New Collection
+    Dim x As Variant
+    For Each x In c1
+        ret.Add x
+    Next
+    For Each x In c2
+        ret.Add x
+    Next
+    Set MargeCollection = ret
+End Function
 
 Function GetShapeLocators(target_sheet As Worksheet) As Collection
     Dim ret As Collection: Set ret = New Collection
@@ -59,10 +78,6 @@ Function GetRangeLocators(target_sheet As Worksheet) As Collection
     Loop
 Fin:
     Set GetRangeLocators = ret
-End Function
-
-Function LocateKey(L As ILocator) As Double
-    LocateKey = L.Top
 End Function
 
 Private Function isBlank(target_range As Range) As Boolean
