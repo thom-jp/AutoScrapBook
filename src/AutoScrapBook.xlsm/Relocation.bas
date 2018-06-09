@@ -11,7 +11,7 @@ Sub Main()
     Call CollectionSort.CSort(c, "LocateKey")
     Debug.Print "-----"
     For Each x In c
-        Debug.Print x.Top
+        Debug.Print x.Top, x.LocatorType
     Next
 End Sub
 

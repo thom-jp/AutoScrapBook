@@ -38,6 +38,10 @@ Public Property Get Right() As Long
     Right = ILocator_Right
 End Property
 
+Private Property Get ILocator_LocatorType() As LocatorType
+    ILocator_LocatorType = eShapeLocator
+End Property
+
 Private Property Get ILocator_Top() As Long
     Dim r As Range: Set r = InnerShape.Parent.Range("a1")
     Do While InnerShape.Top > r.Top

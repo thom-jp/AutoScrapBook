@@ -7,6 +7,9 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
+Public Property Get LocatorType() As LocatorType
+End Property
+
 Public Property Get Top() As Long
 End Property
 

@@ -1,9 +1,4 @@
 Attribute VB_Name = "Grouping"
-Public Type Node
-    x As Single
-    y As Single
-End Type
-
 Public Sub GroupOverlappingShape(ByVal target_sheet As Worksheet)
     Dim SW() As Variant
     Dim c As Collection: Set c = WrappedShapes(target_sheet)

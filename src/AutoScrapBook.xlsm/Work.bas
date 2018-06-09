@@ -34,7 +34,7 @@ Sub testRangeLocator()
     lo.Locate sh.Range("d16")
     lo.Locate Sheet1.Range("c3")
     
-    With New NoAlert
-        sh.Delete
-    End With
+    Application.DisplayAlerts = False
+    sh.Delete
+    Application.DisplayAlerts = True
 End Sub
