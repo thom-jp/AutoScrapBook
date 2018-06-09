@@ -4,7 +4,18 @@ Public Type Node
     y As Single
 End Type
 
-Private Function WrappedShapes() As Collection
+Public Sub GroupOverlappingShape(ByVal target_sheet As Worksheet)
+    Dim SW() As Variant
+    Dim c As Collection: Set c = WrappedShapes(target_sheet)
+    For i = 1 To c.Count
+        SW = c(i)
+        If UBound(SW) > 0 Then
+            target_sheet.Shapes.Range(SW).Group
+        End If
+    Next
+End Sub
+
+Private Function WrappedShapes(ByVal target_sheet As Worksheet) As Collection
     'シェイプをShapeWrapperで包んでコレクションに追加
     Dim c As New Collection, s As Shape, SW1 As ShapeWrapper
     For Each s In ActiveSheet.Shapes
@@ -36,6 +47,13 @@ Private Function WrappedShapes() As Collection
     Set WrappedShapes = c2
 End Function
 
+Public Sub UngroupAllShapes(ByVal target_sheet As Worksheet)
+    Dim sh As Shape
+    For Each sh In ActiveSheet.Shapes
+        Call RecUngroupShape(sh)
+    Next
+End Sub
+
 Private Sub RecUngroupShape(sh As Shape)
     Dim memberShape As Shape
     If sh.Type = msoGroup Then
@@ -45,18 +63,3 @@ Private Sub RecUngroupShape(sh As Shape)
     End If
 End Sub
 
-Public Sub GroupOverlappingShape()
-    Dim SW() As Variant
-    Dim c As Collection: Set c = WrappedShapes
-    For i = 1 To c.Count
-        SW = c(i)
-        ActiveSheet.Shapes.Range(SW).Group
-    Next
-End Sub
-
-Public Sub UngroupAllShapes()
-    Dim sh As Shape
-    For Each sh In ActiveSheet.Shapes
-        Call RecUngroupShape(sh)
-    Next
-End Sub

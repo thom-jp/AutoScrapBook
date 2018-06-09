@@ -14,6 +14,10 @@ Public Property Get Name() As String
     Name = InnerShape.Name
 End Property
 
+Public Property Get Self() As Object
+    Set Self = Me
+End Property
+
 Public Sub SetShape(s As Shape)
     Set InnerShape = s
 End Sub
