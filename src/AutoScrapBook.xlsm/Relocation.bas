@@ -1,18 +1,46 @@
 Attribute VB_Name = "Relocation"
 Sub Main()
+    Call Config.LoadConfig
+    RelocateAll Sheet1
+End Sub
+
+Sub RelocateAll(ByVal target_sheet As Worksheet)
+    'テキストと画像を各Locatorにセットして混在コレクションを作り、ソートする。
     Dim c As Collection
-    Grouping.UngroupAllShapes Sheet1
-    Grouping.GroupOverlappingShape Sheet1
-    Set c = MargeCollection(GetRangeLocators(Sheet1), GetShapeLocators(Sheet1))
-    Dim x As ILocator
-    For Each x In c
-        Debug.Print x.Top
-    Next
+    Grouping.UngroupAllShapes target_sheet
+    Grouping.GroupOverlappingShape target_sheet
+    Set c = MargeCollection(GetRangeLocators(target_sheet), GetShapeLocators(target_sheet))
     Call CollectionSort.CSort(c, "LocateKey")
-    Debug.Print "-----"
-    For Each x In c
-        Debug.Print x.Top, x.LocatorType
+    
+    'テキストは上書き防止の為、一時退避処理
+    With ActiveSheet
+        Dim sh As Worksheet: Set sh = Worksheets.Add
+        .Activate
+    End With
+    Dim loc As ILocator
+    Dim n As Long: n = 1
+    For Each loc In c
+        If loc.LocatorType = eRangeLocator Then
+            loc.Locate sh.Cells(n, 1)
+            n = n + (loc.Bottom - loc.Top) + 2
+        End If
     Next
+    
+    '再配置
+    Dim r As Long: r = Config.startRow
+    For Each loc In c
+        If loc.LocatorType = eRangeLocator Then
+            loc.Locate target_sheet.Cells(r, 1)
+            r = loc.Bottom + 2
+        Else
+            loc.Locate target_sheet.Cells(r, Config.startColumn)
+            r = loc.Bottom + Config.Margin
+        End If
+    Next
+    
+    Application.DisplayAlerts = False
+    sh.Delete
+    Application.DisplayAlerts = True
 End Sub
 
 Function LocateKey(L As ILocator) As Double
