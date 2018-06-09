@@ -6,11 +6,11 @@ End Sub
 
 Sub RelocateAll(ByVal target_sheet As Worksheet)
     'テキストと画像を各Locatorにセットして混在コレクションを作り、ソートする。
-    Dim c As Collection
+    Dim C As Collection
     Grouping.UngroupAllShapes target_sheet
     Grouping.GroupOverlappingShape target_sheet
-    Set c = MargeCollection(GetRangeLocators(target_sheet), GetShapeLocators(target_sheet))
-    Call CollectionSort.CSort(c, "LocateKey")
+    Set C = MargeCollection(GetRangeLocators(target_sheet), GetShapeLocators(target_sheet))
+    Call CollectionSort.CSort(C, "LocateKey")
     
     'テキストは上書き防止の為、一時退避処理
     With ActiveSheet
@@ -19,7 +19,7 @@ Sub RelocateAll(ByVal target_sheet As Worksheet)
     End With
     Dim loc As ILocator
     Dim n As Long: n = 1
-    For Each loc In c
+    For Each loc In C
         If loc.LocatorType = eRangeLocator Then
             loc.Locate sh.Cells(n, 1)
             n = n + (loc.Bottom - loc.Top) + 2
@@ -28,7 +28,7 @@ Sub RelocateAll(ByVal target_sheet As Worksheet)
     
     '再配置
     Dim r As Long: r = Config.startRow
-    For Each loc In c
+    For Each loc In C
         If loc.LocatorType = eRangeLocator Then
             loc.Locate target_sheet.Cells(r, 1)
             r = loc.Bottom + 2

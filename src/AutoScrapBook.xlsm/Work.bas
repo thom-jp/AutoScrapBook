@@ -11,3 +11,4 @@ Sub ClearSheet()
     ActiveWindow.Zoom = 100
     ActiveSheet.Range("A1").Select
 End Sub
+
