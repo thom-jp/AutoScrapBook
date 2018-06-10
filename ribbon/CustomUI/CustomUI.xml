@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<customUI xmlns="http://schemas.microsoft.com/office/2006/01/customui">
+<ribbon>
+<tabs>
+<tab id="SampleTab" label="○○タブ">
+
+<group id="CustomGroupA" label="○○グループ">
+<button id="SampleButtonA" imageMso="HappyFace" size="large" label="マクロＡ" onAction="Module1.Hello" />
+<button id="SampleButtonB" imageMso="SadFace" size="normal" label="マクロＢ" onAction="Module1.Bye" />
+</group>
+
+<group id="CustomGroupB" label="××グループ">
+<button id="SampleButtonC" label="マクロＣ" onAction="Module1.こんにちは" />
+</group>
+
+</tab>
+</tabs>
+</ribbon>
+</customUI>
