@@ -1,16 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<customUI xmlns="http://schemas.microsoft.com/office/2006/01/customui">
+<customUI onLoad="Ribbon_onLoad" xmlns="http://schemas.microsoft.com/office/2006/01/customui">
 <ribbon>
 <tabs>
-<tab id="SampleTab" label="○○タブ">
+<tab id="AutoCaptureTab" label="AutoCapture" insertBeforeMso="TabHome">
 
-<group id="CustomGroupA" label="○○グループ">
-<button id="SampleButtonA" imageMso="HappyFace" size="large" label="マクロＡ" onAction="Module1.Hello" />
-<button id="SampleButtonB" imageMso="SadFace" size="normal" label="マクロＢ" onAction="Module1.Bye" />
+<group id="AutoCapture" label="AutoCapture">
+
+<button id="StartCapture"
+imageMso="OmsGroupCreateSlides"
+size="large"
+label="キャプチャー開始"
+onAction="RibbonMacros"
+tag="Dummy"
+/>
+
+<button id="StopCapture"
+imageMso="PauseAllSharedSpaces"
+size="large"
+label="キャプチャー停止"
+onAction="RibbonMacros"
+tag="Dummy"
+/>
+
 </group>
 
-<group id="CustomGroupB" label="××グループ">
-<button id="SampleButtonC" label="マクロＣ" onAction="Module1.こんにちは" />
+<group id="ModifyPicture" label="編集">
+
+<button id="InsertScope"
+imageMso="FavoritePen1"
+size="large"
+label="赤枠の追加"
+onAction="RibbonMacros"
+tag="Dummy"
+/>
+
+<button id="AlignScreenshots"
+imageMso="PictureReflectionGallery"
+size="large"
+label="画像の整列"
+onAction="RibbonMacros"
+tag="Dummy"
+/>
+</group>
+
+<group id="Export" label="保存と削除">
+
+<button id="ExportManual"
+imageMso="FileCompatibilityChecker"
+size="large"
+label="エクスポート"
+onAction="RibbonMacros"
+tag="Dummy"
+/>
+
+<button id="ClearAll"
+imageMso="SheetDelete"
+size="large"
+label="すべてクリア"
+onAction="RibbonMacros"
+tag="Dummy"
+/>
 </group>
 
 </tab>
