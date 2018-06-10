@@ -45,3 +45,10 @@ Function SortByVerticalLocation(V As ParagraphItem) As Double
     SortByVerticalLocation = V.Top
 End Function
 
+Sub ExportToExcel()
+    With ActiveWorkbook
+        ActiveSheet.Copy
+        .Activate
+    End With
+End Sub
+
