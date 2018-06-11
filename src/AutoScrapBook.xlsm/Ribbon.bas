@@ -12,26 +12,34 @@ Private Sub dummy(control As IRibbonControl)
     Application.Run control.ID
 End Sub
 
-Sub StartCapture()
-    MsgBox "StartCapture"
+Sub R_StartAutoScrap()
+    Call AutoScrap.StartAutoScrap
 End Sub
 
-Sub StopCapture()
-    MsgBox "StopCapture"
+Sub R_StopAutoScrap()
+    Call AutoScrap.StopAutoScrap
 End Sub
 
-Sub ClearAll()
-    MsgBox "Clear"
+Sub R_ClearAll()
+    Cleaning.ClearSheet
 End Sub
 
-Sub InsertScope()
-    MsgBox "PutScope"
+Sub R_PutRedFrame()
+    Indicators.PutRedFrame
 End Sub
 
-Sub ExportManual()
-    MsgBox "ExportManual"
+Sub R_PutCallOut()
+    Indicators.PutCallOut
 End Sub
 
-Sub AlignScreenShots()
-    MsgBox "AlignScreenShots"
+Sub R_ExportToOtherWorkbook()
+    ExportFile.ExportToExcel
+End Sub
+
+Sub R_AlignScraps()
+    Relocation.Main
+End Sub
+
+Sub R_ExportToWord()
+    MsgBox "aaa"
 End Sub

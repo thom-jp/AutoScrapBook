@@ -1,7 +1,7 @@
 Attribute VB_Name = "Relocation"
 Sub Main()
     Call Config.LoadConfig
-    RelocateAll Sheet1
+    RelocateAll ThisWorkbook.ActiveSheet
 End Sub
 
 Sub RelocateAll(ByVal target_sheet As Worksheet)

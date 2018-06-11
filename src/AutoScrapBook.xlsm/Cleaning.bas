@@ -1,4 +1,4 @@
-Attribute VB_Name = "Work"
+Attribute VB_Name = "Cleaning"
 Option Explicit
 Sub ClearSheet()
     If MsgBox("現在のシートをクリアしますか？", vbYesNo + vbExclamation, "確認") = vbYes Then
@@ -11,4 +11,3 @@ Sub ClearSheet()
     ActiveWindow.Zoom = 100
     ActiveSheet.Range("A1").Select
 End Sub
-

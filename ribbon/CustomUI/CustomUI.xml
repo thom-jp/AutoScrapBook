@@ -2,64 +2,78 @@
 <customUI onLoad="Ribbon_onLoad" xmlns="http://schemas.microsoft.com/office/2006/01/customui">
 <ribbon>
 <tabs>
-<tab id="AutoCaptureTab" label="AutoCapture" insertBeforeMso="TabHome">
+<tab id="AutoScrapTab" label="AutoScrap" insertBeforeMso="TabHome">
 
-<group id="AutoCapture" label="AutoCapture">
+<group id="AutoScrap" label="スクラップ">
+	<button id="R_StartAutoScrap"
+	imageMso="OmsSlideInsert"
+	size="large"
+	label="スクラップ開始"
+	onAction="RibbonMacros"
+	tag="Dummy"
+	/>
 
-<button id="StartCapture"
-imageMso="OmsGroupCreateSlides"
-size="large"
-label="キャプチャー開始"
-onAction="RibbonMacros"
-tag="Dummy"
-/>
-
-<button id="StopCapture"
-imageMso="PauseAllSharedSpaces"
-size="large"
-label="キャプチャー停止"
-onAction="RibbonMacros"
-tag="Dummy"
-/>
-
+	<button id="R_StopAutoScrap"
+	imageMso="PauseSharedSpace"
+	size="large"
+	label="スクラップ停止"
+	onAction="RibbonMacros"
+	tag="Dummy"
+	/>
 </group>
 
 <group id="ModifyPicture" label="編集">
+	<button id="R_PutRedFrame"
+	imageMso="FavoritePen1"
+	size="large"
+	label="赤枠の追加"
+	onAction="RibbonMacros"
+	tag="Dummy"
+	/>
 
-<button id="InsertScope"
-imageMso="FavoritePen1"
-size="large"
-label="赤枠の追加"
-onAction="RibbonMacros"
-tag="Dummy"
-/>
-
-<button id="AlignScreenshots"
-imageMso="PictureReflectionGallery"
-size="large"
-label="画像の整列"
-onAction="RibbonMacros"
-tag="Dummy"
-/>
+	<button id="R_PutCallOut"
+	imageMso="Callout"
+	size="large"
+	label="ふきだしの追加"
+	onAction="RibbonMacros"
+	tag="Dummy"
+	/>
+	
+	<button id="R_AlignScraps"
+	imageMso="GroupPictureStyles"
+	size="large"
+	label="画像の整列"
+	onAction="RibbonMacros"
+	tag="Dummy"
+	/>
 </group>
 
-<group id="Export" label="保存と削除">
+<group id="Export" label="出力">
+	<button id="R_ExportToOtherWorkbook"
+	imageMso="FileSaveAsExcelXlsx"
+	size="large"
+	label="別ブックへ出力"
+	onAction="RibbonMacros"
+	tag="Dummy"
+	/>
 
-<button id="ExportManual"
-imageMso="FileCompatibilityChecker"
-size="large"
-label="エクスポート"
-onAction="RibbonMacros"
-tag="Dummy"
-/>
+	<button id="R_ExportToWord"
+	imageMso="FileSaveAsWordDocx"
+	size="large"
+	label="Wordへ出力"
+	onAction="RibbonMacros"
+	tag="Dummy"
+	/>
+</group>
 
-<button id="ClearAll"
-imageMso="SheetDelete"
-size="large"
-label="すべてクリア"
-onAction="RibbonMacros"
-tag="Dummy"
-/>
+<group id="Deletion" label="削除">
+	<button id="R_ClearAll"
+	imageMso="SheetDelete"
+	size="large"
+	label="すべてクリア"
+	onAction="RibbonMacros"
+	tag="Dummy"
+	/>
 </group>
 
 </tab>
