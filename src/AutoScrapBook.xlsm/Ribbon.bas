@@ -41,5 +41,5 @@ Sub R_AlignScraps()
 End Sub
 
 Sub R_ExportToWord()
-    MsgBox "aaa"
+    ExportFile.ExportToWord
 End Sub
