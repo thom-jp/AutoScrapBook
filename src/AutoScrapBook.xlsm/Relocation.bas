@@ -1,7 +1,29 @@
 Attribute VB_Name = "Relocation"
 Sub Main()
     Call Config.LoadConfig
+    Call BugAvoidanceForNumberFormatCopyFail
     RelocateAll ThisWorkbook.ActiveSheet
+End Sub
+
+Sub BugAvoidanceForNumberFormatCopyFail()
+    Dim r As Range: Set r = ThisWorkbook.ActiveSheet.Cells(1, 1)
+    Do Until r.Value = "" And r.Offset(1, 0).Value = ""
+        Set r = r.Offset(1, 0)
+    Loop
+    r.Value = Date
+    r.NumberFormat = "hh:mm:ss"
+    r.Copy r.Offset(1, 0)
+    Range(r, r.Offset(1, 0)).ClearContents
+'Rem Reproducible bug code are below.
+'Sub NumberFormatCopyFail
+'    With ThisWorkbook.Sheets.Add
+'        .Range("B1").Value = "22:00"
+'        .Range("A1:B1").Copy
+'        .Range("A2").Select
+'    End With
+'    ActiveSheet.Paste
+'    Application.CutCopyMode = False
+'End Sub
 End Sub
 
 Sub RelocateAll(ByVal target_sheet As Worksheet)
