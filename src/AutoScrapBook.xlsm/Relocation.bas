@@ -56,7 +56,7 @@ Sub RelocateAll(ByVal target_sheet As Worksheet)
             r = loc.Bottom + 2
         Else
             loc.Locate target_sheet.Cells(r, Config.startColumn)
-            r = loc.Bottom + Config.Margin
+            r = loc.Bottom + Config.Margin + 1
         End If
     Next
     

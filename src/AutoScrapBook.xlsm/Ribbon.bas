@@ -1,7 +1,6 @@
 Attribute VB_Name = "Ribbon"
 Sub Ribbon_onLoad(Ribbon As IRibbonUI)
     Ribbon.ActivateTab "AutoCaptureTab"
-    Debug.Print "Loaded"
 End Sub
 
 Sub RibbonMacros(control As IRibbonControl)
