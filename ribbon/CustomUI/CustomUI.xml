@@ -40,7 +40,7 @@
 	/>
 	
 	<button id="R_AlignScraps"
-	imageMso="GroupPictureStyles"
+	imageMso="PictureReflectionGallery"
 	size="large"
 	label="画像の整列"
 	onAction="RibbonMacros"
