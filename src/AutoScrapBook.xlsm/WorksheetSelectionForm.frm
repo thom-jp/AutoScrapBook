@@ -52,7 +52,9 @@ Private Sub UserForm_Initialize()
     WorksheetList.AddItem "(新規作成)"
     Dim ws As Worksheet
     For Each ws In Worksheets
-        WorksheetList.AddItem ws.Name
+        If UCase(ws.Name) <> "CONFIG" Then
+            WorksheetList.AddItem ws.Name
+        End If
     Next
     WorksheetList.Value = "(現在のシート)"
     StartButton.SetFocus
