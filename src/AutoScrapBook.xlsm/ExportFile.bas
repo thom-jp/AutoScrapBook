@@ -1,7 +1,7 @@
 Attribute VB_Name = "ExportFile"
 'Require Reference of Microsoft Word Object Library
 Sub ExportToWord()
-    Dim C As New Collection
+    Dim c As New Collection
     
     '文字列のピックアップ
     Dim r As Range
@@ -9,7 +9,7 @@ Sub ExportToWord()
         If r.Value <> "" Then
             With New ParagraphItem
                 Set .Item = r
-                C.Add .Self
+                c.Add .Self
             End With
         End If
     Next
@@ -19,18 +19,18 @@ Sub ExportToWord()
     For Each s In ActiveSheet.Shapes
         With New ParagraphItem
             Set .Item = s
-            C.Add .Self
+            c.Add .Self
         End With
     Next
     
-    CSort C, "SortByVerticalLocation"
+    CSort c, "SortByVerticalLocation"
     
     Dim WD As New Word.Application
     WD.Visible = True
     WD.Documents.Add
     '出力
     Dim p As ParagraphItem
-    For Each p In C
+    For Each p In c
         If IsObject(p.Item) Then
             p.Item.Copy
             WD.Selection.Paste
