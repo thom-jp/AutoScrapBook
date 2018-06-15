@@ -67,10 +67,10 @@
 </group>
 
 <group id="Deletion" label="削除">
-	<button id="R_ClearAll"
+	<button id="R_ClearSheet"
 	imageMso="SheetDelete"
 	size="large"
-	label="すべてクリア"
+	label="シートクリア"
 	onAction="RibbonMacros"
 	tag="Dummy"
 	/>

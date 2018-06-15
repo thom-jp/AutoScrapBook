@@ -19,7 +19,7 @@ Sub R_StopAutoScrap()
     Call AutoScrap.StopAutoScrap
 End Sub
 
-Sub R_ClearAll()
+Sub R_ClearSheet()
     Cleaning.ClearSheet
 End Sub
 
