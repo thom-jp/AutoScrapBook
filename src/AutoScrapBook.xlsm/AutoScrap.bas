@@ -65,7 +65,10 @@ Public Sub OnTimeScrap(Optional ByRef void = Empty)
                     Do While TargetRowTop > .Cells(cnt, Config.startColumn).Top
                         cnt = cnt + 1
                     Loop
-                    If .Shapes.Count > 0 Then cnt = cnt + Config.Margin
+                    
+                    If cnt < lastUsedRow Then cnt = lastUsedRow
+                    
+                    If .Shapes.Count > 0 Or lastUsedRow >= Config.startRow Then cnt = cnt + Config.Margin
                     
                     ActiveWindow.ScrollRow = IIf(cnt = 1, 1, cnt - 1)
                     If Config.InsertTime Then
@@ -109,6 +112,19 @@ Private Property Get lowestShapeEdge() As Single
         If ret < (s.Top + s.Height) Then ret = s.Top + s.Height
     Next
     lowestShapeEdge = ret
+End Property
+
+Private Property Get lastUsedRow() As Long
+    With targetSheet.Cells.SpecialCells(xlCellTypeLastCell)
+        Dim j As Long, i As Long
+        For j = .Row To 1 Step -1
+            For i = .Column To 1 Step -1
+                If targetSheet.Cells(j, i).Value <> "" Then
+                    lastUsedRow = j
+                    Exit Property
+                End If
+        Next i, j
+    End With
 End Property
 
 Private Sub popUpWindow()
