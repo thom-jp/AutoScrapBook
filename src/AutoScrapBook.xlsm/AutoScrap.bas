@@ -58,27 +58,27 @@ Public Sub OnTimeScrap(Optional ByRef void = Empty)
                     If .Shapes.Count > 0 Then
                         TargetRowTop = lowestShapeEdge
                     Else
-                        TargetRowTop = targetSheet.Cells(Config.startRow, 1).Top
+                        TargetRowTop = targetSheet.Cells(Config.Value("startRow"), 1).Top
                     End If
                     
                     Dim cnt As Long: cnt = 1
-                    Do While TargetRowTop > .Cells(cnt, Config.startColumn).Top
+                    Do While TargetRowTop > .Cells(cnt, Config.Value("startColumn")).Top
                         cnt = cnt + 1
                     Loop
                     
                     If cnt < lastUsedRow Then cnt = lastUsedRow
                     
-                    If .Shapes.Count > 0 Or lastUsedRow >= Config.startRow Then cnt = cnt + Config.Margin
+                    If .Shapes.Count > 0 Or lastUsedRow >= Config.Value("startRow") Then cnt = cnt + Config.Value("Margin")
                     
                     ActiveWindow.ScrollRow = IIf(cnt = 1, 1, cnt - 1)
-                    If Config.InsertTime Then
-                        With targetSheet.Cells(cnt, Config.startColumn)
+                    If Config.Value("InsertTime") Then
+                        With targetSheet.Cells(cnt, Config.Value("startColumn"))
                             .NumberFormatLocal = "hh:mm:ss"
                             .Value = Time
                         End With
-                        .Paste Destination:=.Cells(cnt + 2, Config.startColumn)
+                        .Paste Destination:=.Cells(cnt + 2, Config.Value("startColumn"))
                     Else
-                        .Paste Destination:=.Cells(cnt, Config.startColumn)
+                        .Paste Destination:=.Cells(cnt, Config.Value("startColumn"))
                     End If
                     
                     Call popUpWindow

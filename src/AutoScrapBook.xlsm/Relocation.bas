@@ -49,14 +49,14 @@ Sub RelocateAll(ByVal target_sheet As Worksheet)
     Next
     
     'çƒîzíu
-    Dim r As Long: r = Config.startRow
+    Dim r As Long: r = Config.Value("startRow")
     For Each loc In C
         If loc.LocatorType = eRangeLocator Then
             loc.Locate target_sheet.Cells(r, 1)
             r = loc.Bottom + 2
         Else
-            loc.Locate target_sheet.Cells(r, Config.startColumn)
-            r = loc.Bottom + Config.Margin + 1
+            loc.Locate target_sheet.Cells(r, Config.Value("startColumn"))
+            r = loc.Bottom + Config.Value("Margin") + 1
         End If
     Next
     
