@@ -30,9 +30,17 @@ Public Sub ExportToWord(Optional void = Empty)
     Dim doc As Word.Document
     Set doc = WD.Documents.Add
     
-    Dim x As Double, y As Double, w As Double
+    With doc.PageSetup
+        .LeftMargin = 54
+        .RightMargin = 54
+        .BottomMargin = 72
+        .TopMargin = 72
+    End With
+    
+    Dim x As Double, y As Double, w As Double, h As Double
     With WD.Selection.PageSetup
         w = .PageWidth - .LeftMargin - .RightMargin
+        h = .PageHeight - .TopMargin - .BottomMargin
     End With
 
     'èoóÕ
@@ -43,7 +51,7 @@ Public Sub ExportToWord(Optional void = Empty)
             x = WD.Selection.Information(Word.wdHorizontalPositionRelativeToPage) + 5
             y = WD.Selection.Information(Word.wdVerticalPositionRelativeToPage) + 5
             Dim canvas As Word.Shape
-            Set canvas = doc.Shapes.AddCanvas(x, y, w, 150, WD.Selection.Range)
+            Set canvas = doc.Shapes.AddCanvas(x, y, w, h, WD.Selection.Range)
             canvas.WrapFormat.Type = Word.wdWrapInline
             canvas.LockAnchor = True
             With canvas.line
@@ -57,6 +65,8 @@ Public Sub ExportToWord(Optional void = Empty)
             p.Item.Copy
             WD.Selection.Paste
             Call resizeInsideCanvas(canvas)
+            doc.Bookmarks("\EndOfDoc").Select
+            WD.Selection.TypeParagraph
         Else
             doc.Bookmarks("\EndOfDoc").Select
             WD.Selection.TypeText p.Item
