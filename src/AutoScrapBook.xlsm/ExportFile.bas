@@ -27,18 +27,61 @@ Public Sub ExportToWord(Optional void = Empty)
     
     Dim WD As New Word.Application
     WD.Visible = True
-    WD.Documents.Add
+    Dim doc As Word.Document
+    Set doc = WD.Documents.Add
+    
+    Dim x As Double, y As Double, w As Double
+    With WD.Selection.PageSetup
+        w = .PageWidth - .LeftMargin - .RightMargin
+    End With
+
     'èoóÕ
     Dim p As ParagraphItem
     For Each p In c
         If IsObject(p.Item) Then
+            doc.Bookmarks("\EndOfDoc").Select
+            x = WD.Selection.Information(Word.wdHorizontalPositionRelativeToPage) + 5
+            y = WD.Selection.Information(Word.wdVerticalPositionRelativeToPage) + 5
+            Dim canvas As Word.Shape
+            Set canvas = doc.Shapes.AddCanvas(x, y, w, 150, WD.Selection.Range)
+            canvas.WrapFormat.Type = Word.wdWrapInline
+            canvas.LockAnchor = True
+            With canvas.line
+                .Weight = 0.75
+                .Style = msoLineSingle
+                .Visible = msoTrue
+                .ForeColor.RGB = RGB(200, 200, 200)
+            End With
+            canvas.Fill.BackColor.RGB = RGB(250, 250, 250)
+            canvas.Select
             p.Item.Copy
             WD.Selection.Paste
+            Call resizeInsideCanvas(canvas)
         Else
+            doc.Bookmarks("\EndOfDoc").Select
             WD.Selection.TypeText p.Item
         End If
         WD.Selection.TypeParagraph
     Next
+End Sub
+
+Private Sub resizeInsideCanvas(ByRef canvas As Word.Shape)
+    canvas.LockAspectRatio = msoFalse
+    Dim n As Word.Shape
+    Set n = canvas.CanvasItems(1)
+    If n.Height = canvas.Height And n.Width < canvas.Width Then
+        canvas.Height = canvas.Width / (n.Width / n.Height)
+        n.Width = canvas.Width
+        n.Height = canvas.Height
+        n.LockAspectRatio = msoTrue
+        n.Width = n.Width * 0.95
+        n.Top = 0.2
+        n.Left = 0.2
+    ElseIf n.Height < canvas.Height Then
+        canvas.Height = n.Height + 5
+        n.LockAspectRatio = msoFalse
+        n.Height = canvas.Height - 5
+    End If
 End Sub
 
 Public Function SortByVerticalLocation(V As ParagraphItem) As Double
