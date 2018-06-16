@@ -8,7 +8,9 @@ Private Property Get InitialSettings() As Collection
     
     'Please define settings as like examples below.
     'The examples should be deleted.
-    InitialSettings.Add Array("BackgroundColor", rgbWheat, "rgbWheat")
+    InitialSettings.Add Array("BackgroundColorForWork", rgbWheat, "rgbWheat")
+    InitialSettings.Add Array("BackgroundColorForFinish", rgbWhite, "rgbWhite")
+    InitialSettings.Add Array("CloseAfterExport", True, "Close file after export")
     InitialSettings.Add Array("Margin", 5, "how many blank cells put between pictures")
     InitialSettings.Add Array("InsertTime", True, "Write scraptime or not")
     InitialSettings.Add Array("StartRow", 5, "")

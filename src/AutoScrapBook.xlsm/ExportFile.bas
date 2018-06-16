@@ -81,13 +81,19 @@ Public Sub ExportToWord(Optional void = Empty)
         doc.Bookmarks("\EndOfDoc").Select
         WD.Selection.TypeParagraph
     Next
-    
+
     WD.Application.DisplayAlerts = wdAlertsNone
     doc.SaveAs2 filePath
     WD.Application.DisplayAlerts = wdAlertsAll
-    doc.Close
-    WD.Application.Quit
+    
     MsgBox "出力しました。", vbInformation, "結果"
+    Config.LoadConfig
+    If Config.Value("CloseAfterExport") Then
+        doc.Close
+        WD.Application.Quit
+    Else
+        AppActivate WD.ActiveWindow.Caption & " - " & WD.Caption
+    End If
 End Sub
 
 Private Sub resizeInsideCanvas(ByRef canvas As Word.Shape)
@@ -116,14 +122,15 @@ End Function
 Public Sub ExportToExcel(Optional void = Empty)
     Dim filePath As String: filePath = GetSavePath(xlsx)
     If filePath <> vbNullString Then
-        With ActiveWorkbook
-            ActiveSheet.Copy
-            Application.DisplayAlerts = False
-            ActiveWorkbook.SaveAs filePath
+        Config.LoadConfig
+        ActiveSheet.Copy
+        ActiveSheet.Cells.Interior.Color = Config.Value("BackgroundColorForFinish")
+        Application.DisplayAlerts = False
+        ActiveWorkbook.SaveAs filePath
+        If Config.Value("CloseAfterExport") Then
             ActiveWorkbook.Close
-            Application.DisplayAlerts = True
-            .Activate
-        End With
+        End If
+        Application.DisplayAlerts = True
         MsgBox "出力しました。", vbInformation, "結果"
     End If
 End Sub

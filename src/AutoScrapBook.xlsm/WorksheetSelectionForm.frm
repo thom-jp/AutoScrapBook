@@ -24,7 +24,7 @@ Function OpenDialog() As Worksheet
             Set ret = .ActiveSheet
         ElseIf WorksheetList.Selected(1) Then
             Set ret = .Worksheets.Add(After:=.Worksheets(.Worksheets.Count))
-            ret.Cells.Interior.Color = Config.Value("BackGroundColor")
+            ret.Cells.Interior.Color = Config.Value("BackGroundColorForWork")
         Else
             Set ret = .Worksheets(WorksheetList.Value)
             ret.Activate
