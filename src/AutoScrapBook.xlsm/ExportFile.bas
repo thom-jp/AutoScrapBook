@@ -1,6 +1,13 @@
 Attribute VB_Name = "ExportFile"
+Private Enum fileType
+    xlsx
+    docx
+End Enum
 'Require Reference of Microsoft Word Object Library
 Public Sub ExportToWord(Optional void = Empty)
+    Dim filePath As String: filePath = GetSavePath(docx)
+    If filePath = vbNullString Then Exit Sub
+    
     Dim c As New Collection
     
     '文字列のピックアップ
@@ -74,6 +81,13 @@ Public Sub ExportToWord(Optional void = Empty)
         doc.Bookmarks("\EndOfDoc").Select
         WD.Selection.TypeParagraph
     Next
+    
+    WD.Application.DisplayAlerts = wdAlertsNone
+    doc.SaveAs2 filePath
+    WD.Application.DisplayAlerts = wdAlertsAll
+    doc.Close
+    WD.Application.Quit
+    MsgBox "出力しました。", vbInformation, "結果"
 End Sub
 
 Private Sub resizeInsideCanvas(ByRef canvas As Word.Shape)
@@ -100,9 +114,56 @@ Public Function SortByVerticalLocation(V As ParagraphItem) As Double
 End Function
 
 Public Sub ExportToExcel(Optional void = Empty)
-    With ActiveWorkbook
-        ActiveSheet.Copy
-        .Activate
-    End With
+    Dim filePath As String: filePath = GetSavePath(xlsx)
+    If filePath <> vbNullString Then
+        With ActiveWorkbook
+            ActiveSheet.Copy
+            Application.DisplayAlerts = False
+            ActiveWorkbook.SaveAs filePath
+            ActiveWorkbook.Close
+            Application.DisplayAlerts = True
+            .Activate
+        End With
+        MsgBox "出力しました。", vbInformation, "結果"
+    End If
 End Sub
 
+Private Function GetSavePath(file_type As fileType) As String
+    Dim attr As String
+    Dim filter As String
+    If file_type = docx Then
+        attr = "docx"
+        filter = "Word 文書, *.docx"
+    ElseIf file_type = xlsx Then
+        attr = "xlsx"
+        filter = "Excel ブック, *.xlsx"
+    End If
+
+Retry:
+    Dim filePath As Variant
+    filePath = Application.GetSaveAsFilename( _
+        InitialFileName:=Format(Now, "yyyy年m月d日_hh時n分s秒") & "_ScreenShots." & attr, _
+        FileFilter:=filter)
+    
+    If filePath <> False Then
+        If Dir(filePath) <> "" Then
+            Select Case MsgBox("そのファイルは存在します。上書きしますか？", vbYesNoCancel + vbExclamation)
+            Case vbCancel
+                GetSavePath = vbNullString
+                GoTo Fin
+            Case vbNo
+                GoTo Retry
+            Case vbYes
+                GoTo ReturnPath
+            End Select
+        Else
+            GoTo ReturnPath
+        End If
+    Else
+        GetSavePath = vbNullString
+        GoTo Fin
+    End If
+ReturnPath:
+    GetSavePath = filePath
+Fin:
+End Function

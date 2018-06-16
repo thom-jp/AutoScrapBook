@@ -3,7 +3,7 @@ Public Sub PutCallOut(Optional void = Empty)
     Dim callOutText As String: callOutText = InputBox("吹き出しの内容を入力してください。", "入力")
     If callOutText = "" Then
         MsgBox "キャンセルしました。", vbInformation, "キャンセル"
-        GoTo fin
+        GoTo Fin
     End If
     Dim r As Range: Set r _
         = ActiveSheet.Cells(ActiveWindow.ScrollRow, ActiveWindow.ScrollColumn)
@@ -19,7 +19,7 @@ Public Sub PutCallOut(Optional void = Empty)
     sh.TextFrame2.TextRange.Characters.Text = callOutText
     sh.TextFrame2.AutoSize = msoAutoSizeShapeToFitText
     sh.Height = sh.Height + 1 '表示バグ解消のためサイズを微修正
-fin:
+Fin:
 End Sub
 
 Private Sub drawShapeStyle(ByVal sh As Shape, _

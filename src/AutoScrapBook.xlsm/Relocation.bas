@@ -109,7 +109,7 @@ Private Function GetRangeLocators(target_sheet As Worksheet) As Collection
     Do
         Do While isBlank(line)
             Set line = line.Offset(1, 0)
-            If line.Row > maxRow Then GoTo fin
+            If line.Row > maxRow Then GoTo Fin
         Loop
         
         Dim block As Range
@@ -126,7 +126,7 @@ Private Function GetRangeLocators(target_sheet As Worksheet) As Collection
             ret.Add .Self
         End With
     Loop
-fin:
+Fin:
     Set GetRangeLocators = ret
 End Function
 
