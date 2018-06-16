@@ -66,11 +66,34 @@
 	/>
 </group>
 
-<group id="Deletion" label="削除">
+<group id="Deletion" label="クリア">
 	<button id="R_ClearSheet"
 	imageMso="SheetDelete"
 	size="large"
 	label="シートクリア"
+	onAction="RibbonMacros"
+	tag="Dummy"
+	/>
+</group>
+
+<group id="Configuration" label="設定">
+	<button id="R_OpenConfig"
+	size="normal"
+	label="設定を開く"
+	onAction="RibbonMacros"
+	tag="Dummy"
+	/>
+	
+	<button id="R_CloseConfig"
+	size="normal"
+	label="設定を閉じる"
+	onAction="RibbonMacros"
+	tag="Dummy"
+	/>
+	
+	<button id="R_ResetConfig"
+	size="normal"
+	label="設定の初期化"
 	onAction="RibbonMacros"
 	tag="Dummy"
 	/>
