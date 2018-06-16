@@ -61,6 +61,7 @@ Public Sub ExportToWord(Optional void = Empty)
             doc.Bookmarks("\EndOfDoc").Select
             WD.Selection.TypeText p.Item
         End If
+        doc.Bookmarks("\EndOfDoc").Select
         WD.Selection.TypeParagraph
     Next
 End Sub
