@@ -1,11 +1,11 @@
 Attribute VB_Name = "Relocation"
-Sub Main()
+Public Sub Main(Optional void = Empty)
     Call Config.LoadConfig
     Call BugAvoidanceForNumberFormatCopyFail
     RelocateAll ThisWorkbook.ActiveSheet
 End Sub
 
-Sub BugAvoidanceForNumberFormatCopyFail()
+Private Sub BugAvoidanceForNumberFormatCopyFail()
     Dim r As Range: Set r = ThisWorkbook.ActiveSheet.Cells(1, 1)
     Do Until r.Value = "" And r.Offset(1, 0).Value = ""
         Set r = r.Offset(1, 0)
@@ -26,7 +26,7 @@ Sub BugAvoidanceForNumberFormatCopyFail()
 'End Sub
 End Sub
 
-Sub RelocateAll(ByVal target_sheet As Worksheet)
+Private Sub RelocateAll(ByVal target_sheet As Worksheet)
     'テキストと画像を各Locatorにセットして混在コレクションを作り、ソートする。
     Dim c As Collection
     Grouping.UngroupAllShapes target_sheet
@@ -65,11 +65,11 @@ Sub RelocateAll(ByVal target_sheet As Worksheet)
     Application.DisplayAlerts = True
 End Sub
 
-Function LocateKey(L As ILocator) As Double
+Public Function LocateKey(L As ILocator) As Double
     LocateKey = L.Top
 End Function
 
-Function MargeCollection(c1 As Collection, c2 As Collection) As Collection
+Private Function MargeCollection(c1 As Collection, c2 As Collection) As Collection
     Dim ret As Collection: Set ret = New Collection
     Dim x As Variant
     For Each x In c1
@@ -81,7 +81,7 @@ Function MargeCollection(c1 As Collection, c2 As Collection) As Collection
     Set MargeCollection = ret
 End Function
 
-Function GetShapeLocators(target_sheet As Worksheet) As Collection
+Private Function GetShapeLocators(target_sheet As Worksheet) As Collection
     Dim ret As Collection: Set ret = New Collection
     Dim sh As Shape
     For Each sh In target_sheet.Shapes
@@ -93,7 +93,7 @@ Function GetShapeLocators(target_sheet As Worksheet) As Collection
     Set GetShapeLocators = ret
 End Function
 
-Function GetRangeLocators(target_sheet As Worksheet) As Collection
+Private Function GetRangeLocators(target_sheet As Worksheet) As Collection
     Dim ret As Collection: Set ret = New Collection
     
     With target_sheet.Cells.SpecialCells(xlCellTypeLastCell)

@@ -29,7 +29,7 @@ Private Declare Function GetWindowThreadProcessId Lib "user32" (ByVal hWnd As Lo
 Private running As Boolean
 Private targetSheet As Worksheet
 
-Public Sub StartAutoScrap()
+Public Sub StartAutoScrap(Optional void = Empty)
     Call Config.LoadConfig
     Set targetSheet = WorksheetSelectionForm.OpenDialog
     If targetSheet Is Nothing Then Exit Sub
@@ -39,7 +39,7 @@ Public Sub StartAutoScrap()
     Call OnTimeScrap
 End Sub
 
-Public Sub StopAutoScrap()
+Public Sub StopAutoScrap(Optional void = Empty)
     running = False
     Application.Caption = ""
 End Sub

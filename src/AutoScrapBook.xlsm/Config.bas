@@ -15,12 +15,12 @@ Private Property Get InitialSettings() As Collection
     InitialSettings.Add Array("StartColumn", 3, "")
 End Property
 
-Sub LoadConfig(Optional ByRef void = Empty)
+Public Sub LoadConfig(Optional ByRef void = Empty)
     If Not existConfigSheet Then ResetConfig
     configurations = ThisWorkbook.Worksheets("Config").Range("a1").CurrentRegion.Value
 End Sub
 
-Public Sub ShowConfig()
+Public Sub ShowConfig(Optional void = Empty)
     If Not existConfigSheet Then ResetConfig
     With ThisWorkbook.Worksheets("Config")
         .Visible = xlSheetVisible
@@ -28,7 +28,7 @@ Public Sub ShowConfig()
     End With
 End Sub
 
-Public Sub HideConfig()
+Public Sub HideConfig(Optional void = Empty)
     If Not existConfigSheet Then ResetConfig
     ThisWorkbook.Worksheets("Config").Visible = xlSheetVeryHidden
 End Sub
@@ -42,7 +42,7 @@ Public Property Get Value(conf_name As String)
     Next
 End Property
 
-Public Sub ResetConfig()
+Public Sub ResetConfig(Optional void = Empty)
     If existConfigSheet Then
         With ThisWorkbook.Sheets("Config")
             Application.DisplayAlerts = False

@@ -1,6 +1,6 @@
 Attribute VB_Name = "Cleaning"
 Option Explicit
-Sub ClearSheet()
+Public Sub ClearSheet(Optional void = Empty)
     If MsgBox("現在のシートをクリアしますか？", vbYesNo + vbExclamation, "確認") = vbYes Then
         ThisWorkbook.ActiveSheet.Cells.Delete
         Dim sh As Shape

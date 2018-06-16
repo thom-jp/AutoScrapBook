@@ -1,5 +1,5 @@
 Attribute VB_Name = "Indicators"
-Sub PutCallOut()
+Public Sub PutCallOut(Optional void = Empty)
     Dim callOutText As String: callOutText = InputBox("吹き出しの内容を入力してください。", "入力")
     If callOutText = "" Then
         MsgBox "キャンセルしました。", vbInformation, "キャンセル"
@@ -54,7 +54,7 @@ Private Sub drawShapeStyle(ByVal sh As Shape, _
     End With
 End Sub
 
-Sub PutRedFrame()
+Public Sub PutRedFrame(Optional void = Empty)
 Attribute PutRedFrame.VB_ProcData.VB_Invoke_Func = " \n14"
     Dim r As Range: Set r _
         = ActiveSheet.Cells(ActiveWindow.ScrollRow, ActiveWindow.ScrollColumn)

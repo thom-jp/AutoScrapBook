@@ -1,6 +1,6 @@
 Attribute VB_Name = "ExportFile"
 'Require Reference of Microsoft Word Object Library
-Sub ExportToWord()
+Public Sub ExportToWord(Optional void = Empty)
     Dim c As New Collection
     
     '文字列のピックアップ
@@ -41,11 +41,11 @@ Sub ExportToWord()
     Next
 End Sub
 
-Function SortByVerticalLocation(V As ParagraphItem) As Double
+Public Function SortByVerticalLocation(V As ParagraphItem) As Double
     SortByVerticalLocation = V.Top
 End Function
 
-Sub ExportToExcel()
+Public Sub ExportToExcel(Optional void = Empty)
     With ActiveWorkbook
         ActiveSheet.Copy
         .Activate
