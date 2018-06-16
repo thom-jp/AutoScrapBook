@@ -8,6 +8,9 @@ Public Sub ExportToWord(Optional void = Empty)
     Dim filePath As String: filePath = GetSavePath(docx)
     If filePath = vbNullString Then Exit Sub
     
+    Call Relocation.Main
+    DoEvents
+    
     Dim c As New Collection
     
     '文字列のピックアップ
@@ -69,7 +72,7 @@ Public Sub ExportToWord(Optional void = Empty)
             End With
             canvas.Fill.BackColor.RGB = RGB(250, 250, 250)
             canvas.Select
-            p.Item.Copy
+            p.Item.CopyPicture
             WD.Selection.Paste
             Call resizeInsideCanvas(canvas)
             doc.Bookmarks("\EndOfDoc").Select
