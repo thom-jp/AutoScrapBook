@@ -1,4 +1,5 @@
 Attribute VB_Name = "ExportFile"
+#Const EearlyBinding = False
 Private Enum fileType
     xlsx
     docx
@@ -35,9 +36,24 @@ Public Sub ExportToWord(Optional void = Empty)
     
     CSort c, "SortByVerticalLocation"
     
-    Dim WD As New Word.Application
+    #If EearlyBinding Then
+        Dim WD As Word.Application
+        Dim doc As Word.Document
+        Dim canvas As Word.Shape
+    #Else
+        Dim WD As Object
+        Dim doc As Object
+        Dim canvas As Object
+        Const wdHorizontalPositionRelativeToPage = 5
+        Const wdVerticalPositionRelativeToPage = 6
+        Const wdWrapInline = 7
+        Const wdAlertsNone = 0
+        Const wdAlertsAll = -1
+    #End If
+    
+    Set WD = CreateObject("Word.Application")
     WD.Visible = True
-    Dim doc As Word.Document
+    
     Set doc = WD.Documents.Add
     
     With doc.PageSetup
@@ -58,11 +74,10 @@ Public Sub ExportToWord(Optional void = Empty)
     For Each p In c
         If IsObject(p.Item) Then
             doc.Bookmarks("\EndOfDoc").Select
-            x = WD.Selection.Information(Word.wdHorizontalPositionRelativeToPage) + 5
-            y = WD.Selection.Information(Word.wdVerticalPositionRelativeToPage) + 5
-            Dim canvas As Word.Shape
+            x = WD.Selection.Information(wdHorizontalPositionRelativeToPage) + 5
+            y = WD.Selection.Information(wdVerticalPositionRelativeToPage) + 5
             Set canvas = doc.Shapes.AddCanvas(x, y, w, h, WD.Selection.Range)
-            canvas.WrapFormat.Type = Word.wdWrapInline
+            canvas.WrapFormat.Type = wdWrapInline
             canvas.LockAnchor = True
             With canvas.line
                 .Weight = 0.75
@@ -99,9 +114,15 @@ Public Sub ExportToWord(Optional void = Empty)
     End If
 End Sub
 
+#If EearlyBinding Then
 Private Sub resizeInsideCanvas(ByRef canvas As Word.Shape)
+        Dim n As Word.Shape
+#Else
+Private Sub resizeInsideCanvas(ByRef canvas As Object)
+        Dim n As Object
+#End If
+    
     canvas.LockAspectRatio = msoFalse
-    Dim n As Word.Shape
     Set n = canvas.CanvasItems(1)
     If n.Height = canvas.Height And n.Width < canvas.Width Then
         canvas.Height = canvas.Width / (n.Width / n.Height)
